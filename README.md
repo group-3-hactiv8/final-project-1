@@ -16,7 +16,10 @@ Todos
 
 ## Pembagian Tugas
 Prinata Rakha Santoso
-- 
+- Buat model Todos
+- Buat DTO TodoResponse
+- Buat API Get All Todos
+- Buat API Create a Todo
 
 Iqbal Hasanu Hamdani
 - 
