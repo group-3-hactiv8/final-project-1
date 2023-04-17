@@ -32,7 +32,13 @@ func GetTodos(c *gin.Context) {
 		todosResponse = append(todosResponse, todoResponse)
 	}
 
-	c.JSON(http.StatusOK, todosResponse)
+	response := dto.Response{
+		Message:    "Todos fetched successfully",
+		StatusCode: http.StatusOK,
+		Data:       todosResponse,
+	}
+
+	c.JSON(http.StatusOK, response)
 }
 
 func CreateTodo(c *gin.Context) {
@@ -79,5 +85,11 @@ func CreateTodo(c *gin.Context) {
 		Completed: newTodo.Completed,
 	}
 
-	c.JSON(http.StatusCreated, TodoResponse)
+	response := dto.Response{
+		Message:    "Todo created successfully",
+		StatusCode: http.StatusCreated,
+		Data:       TodoResponse,
+	}
+
+	c.JSON(http.StatusCreated, response)
 }
