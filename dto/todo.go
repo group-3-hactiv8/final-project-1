@@ -12,3 +12,9 @@ type Response struct {
 	StatusCode int         `json:"statusCode"`
 	Data       interface{} `json:"data"`
 }
+
+type TodoUpdate struct {
+	UserID    uint   `json:"userId"`
+	Title     string `json:"title"`
+	Completed bool   `json:"completed"`
+}
