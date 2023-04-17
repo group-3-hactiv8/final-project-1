@@ -93,3 +93,56 @@ func CreateTodo(c *gin.Context) {
 
 	c.JSON(http.StatusCreated, response)
 }
+
+func UpdateTodo(c *gin.Context) {
+	var newTodo models.Todo
+
+	db := database.GetDB()
+
+	if err := db.Where("id = ?", c.Param("id")).First(&newTodo).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{
+			"error" : "Todo Not Found !",
+		})
+		return
+	}
+
+	var todoUpdate dto.TodoUpdate
+
+	if err := c.ShouldBindJSON(&todoUpdate); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error" : err.Error(),
+		})
+		return
+	}
+
+	if err := db.Model(&newTodo).Update("completed", false).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+		"error": err.Error(),
+		})
+	}
+
+	if err := db.Model(&newTodo).Updates(models.Todo{
+		UserID: todoUpdate.UserID, 
+		Title: todoUpdate.Title, 
+		Completed: todoUpdate.Completed}).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	TodoResponse := dto.TodoResponse{
+		ID:        newTodo.ID,
+		UserID:    newTodo.UserID,
+		Title:     newTodo.Title,
+		Completed: newTodo.Completed,
+	}
+
+	response := dto.Response{
+		Message:    "Todo Update successfully",
+		StatusCode: http.StatusOK,
+		Data:       TodoResponse,
+	}
+
+	c.JSON(http.StatusOK, response)
+}

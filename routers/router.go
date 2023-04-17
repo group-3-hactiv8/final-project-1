@@ -14,7 +14,7 @@ func StartApp() *gin.Engine {
 		todosRouter.GET("/", controllers.GetTodos)
 		todosRouter.POST("/", controllers.CreateTodo)
 		// todosRouter.GET("/:id", controllers.GetTodo)
-		// todosRouter.PUT("/:id", controllers.UpdateTodo)
+		todosRouter.PUT("/:id", controllers.UpdateTodo)
 		// todosRouter.DELETE("/:id", controllers.DeleteTodo)
 	}
 
