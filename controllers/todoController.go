@@ -9,6 +9,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// GetAllTodos godoc
+// @Tags todos
+// @Description Get All Todos Data
+// @ID get-all-Todos
+// @Produce json
+// @Success 200 {object} dto.Response
+// @Router /todos [get]
 func GetTodos(c *gin.Context) {
 	db := database.GetDB()
 	var todos []models.Todo
@@ -41,6 +48,15 @@ func GetTodos(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// CreateNewTodo godoc
+// @Tags todos
+// @Description Create New Todo Data
+// @ID create-new-Todo
+// @Accept json
+// @Produce json
+// @Param models.Todo body models.Todo true "request body json"
+// @Success 201 {object} dto.Response
+// @Router /todos [post]
 func CreateTodo(c *gin.Context) {
 	var newTodo models.Todo
 	if err := c.ShouldBindJSON(&newTodo); err != nil {
@@ -94,6 +110,16 @@ func CreateTodo(c *gin.Context) {
 	c.JSON(http.StatusCreated, response)
 }
 
+// UpdateATodo godoc
+// @Tags todos
+// @Description Update Todo Data
+// @ID update-a-todo
+// @Accept json
+// @Produce json
+// @Param id path uint true "request id"
+// @Param models.Todo body models.Todo true "request body json"
+// @Success 200 {object} dto.Response
+// @Router /todos/{id} [put]
 func UpdateTodo(c *gin.Context) {
 	var newTodo models.Todo
 
@@ -101,7 +127,7 @@ func UpdateTodo(c *gin.Context) {
 
 	if err := db.Where("id = ?", c.Param("id")).First(&newTodo).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{
-			"error" : "Todo Not Found !",
+			"error": "Todo Not Found !",
 		})
 		return
 	}
@@ -110,20 +136,20 @@ func UpdateTodo(c *gin.Context) {
 
 	if err := c.ShouldBindJSON(&todoUpdate); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"error" : err.Error(),
+			"error": err.Error(),
 		})
 		return
 	}
 
 	if err := db.Model(&newTodo).Update("completed", false).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
-		"error": err.Error(),
+			"error": err.Error(),
 		})
 	}
 
 	if err := db.Model(&newTodo).Updates(models.Todo{
-		UserID: todoUpdate.UserID, 
-		Title: todoUpdate.Title, 
+		UserID:    todoUpdate.UserID,
+		Title:     todoUpdate.Title,
 		Completed: todoUpdate.Completed}).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),

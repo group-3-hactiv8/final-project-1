@@ -1,0 +1,83 @@
+basePath: /
+definitions:
+  dto.Response:
+    properties:
+      data: {}
+      message:
+        type: string
+      statusCode:
+        type: integer
+    type: object
+  models.Todo:
+    type: object
+host: localhost:8080
+info:
+  contact:
+    name: Swagger API Team
+  description: This is a sample server for managing Todo.
+  termsOfService: http://swagger.io/terms/
+  title: Todos API
+  version: "1.0"
+paths:
+  /todos:
+    get:
+      description: Get All Todos Data
+      operationId: get-all-Todos
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.Response'
+      tags:
+      - todos
+    post:
+      consumes:
+      - application/json
+      description: Create New Todo Data
+      operationId: create-new-Todo
+      parameters:
+      - description: request body json
+        in: body
+        name: models.Todo
+        required: true
+        schema:
+          $ref: '#/definitions/models.Todo'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/dto.Response'
+      tags:
+      - todos
+  /todos/{id}:
+    put:
+      consumes:
+      - application/json
+      description: Update Todo Data
+      operationId: update-a-todo
+      parameters:
+      - description: request id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: request body json
+        in: body
+        name: models.Todo
+        required: true
+        schema:
+          $ref: '#/definitions/models.Todo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.Response'
+      tags:
+      - todos
+swagger: "2.0"
