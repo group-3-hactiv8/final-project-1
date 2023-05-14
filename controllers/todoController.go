@@ -172,3 +172,70 @@ func UpdateTodo(c *gin.Context) {
 
 	c.JSON(http.StatusOK, response)
 }
+
+// DeleteTodo godoc
+// @Tags todos
+// @Description Delete To do
+// @ID update-a-todo
+// @Accept json
+// @Produce json
+// @Param id path uint true "request id"
+// @Param models.Todo body models.Todo true "request body json"
+// @Success 200 {object} dto.Response
+// @Router /todos/{id} [put]
+func DeleteTodo(c *gin.Context) {
+
+	var newTodo models.Todo
+
+	db := database.GetDB()
+
+	if err := db.Where("id = ?", c.Param("id")).First(&newTodo).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Todo not found!"})
+		return
+	}
+
+	if err := db.Delete(&newTodo).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"message": "Todo deleted"})
+
+}
+
+// GetTodo godoc
+// @Tags todos
+// @Description GetTodo
+// @ID get-to-do
+// @Accept json
+// @Produce json
+// @Param id path uint true "request id"
+// @Param models.Todo body models.Todo true "request body json"
+// @Success 200 {object} dto.Response
+// @Router /todos/{id} [put]
+func GetTodo(c *gin.Context) {
+
+	var newTodo models.Todo
+
+	db := database.GetDB()
+
+	if err := db.Where("id= ?", c.Param("id")).First(&newTodo).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Todo not found"})
+		return
+	}
+
+	TodoResponse := dto.TodoResponse{
+		ID:        newTodo.ID,
+		UserID:    newTodo.UserID,
+		Title:     newTodo.Title,
+		Completed: newTodo.Completed,
+	}
+
+	response := dto.Response{
+		Message:    "Get Todo successfully",
+		StatusCode: http.StatusOK,
+		Data:       TodoResponse,
+	}
+
+	c.JSON(http.StatusOK, response)
+
+}

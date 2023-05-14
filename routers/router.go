@@ -26,9 +26,9 @@ func StartApp() *gin.Engine {
 	{
 		todosRouter.GET("/", controllers.GetTodos)
 		todosRouter.POST("/", controllers.CreateTodo)
-		// todosRouter.GET("/:id", controllers.GetTodo)
+		todosRouter.GET("/:id", controllers.GetTodo)
 		todosRouter.PUT("/:id", controllers.UpdateTodo)
-		// todosRouter.DELETE("/:id", controllers.DeleteTodo)
+		todosRouter.DELETE("/:id", controllers.DeleteTodo)
 	}
 
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
