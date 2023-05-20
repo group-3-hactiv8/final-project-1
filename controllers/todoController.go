@@ -176,13 +176,13 @@ func UpdateTodo(c *gin.Context) {
 // DeleteTodo godoc
 // @Tags todos
 // @Description Delete To do
-// @ID update-a-todo
+// @ID delete-to-do
 // @Accept json
 // @Produce json
 // @Param id path uint true "request id"
 // @Param models.Todo body models.Todo true "request body json"
 // @Success 200 {object} dto.Response
-// @Router /todos/{id} [put]
+// @Router /todos/{id} [del]
 func DeleteTodo(c *gin.Context) {
 
 	var newTodo models.Todo
@@ -211,7 +211,7 @@ func DeleteTodo(c *gin.Context) {
 // @Param id path uint true "request id"
 // @Param models.Todo body models.Todo true "request body json"
 // @Success 200 {object} dto.Response
-// @Router /todos/{id} [put]
+// @Router /todos/{id} [get]
 func GetTodo(c *gin.Context) {
 
 	var newTodo models.Todo
