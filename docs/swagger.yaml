@@ -54,6 +54,58 @@ paths:
       tags:
       - todos
   /todos/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete To do
+      operationId: delete-to-do
+      parameters:
+      - description: request id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: request body json
+        in: body
+        name: models.Todo
+        required: true
+        schema:
+          $ref: '#/definitions/models.Todo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.Response'
+      tags:
+      - todos
+    get:
+      consumes:
+      - application/json
+      description: GetTodo
+      operationId: get-to-do
+      parameters:
+      - description: request id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: request body json
+        in: body
+        name: models.Todo
+        required: true
+        schema:
+          $ref: '#/definitions/models.Todo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.Response'
+      tags:
+      - todos
     put:
       consumes:
       - application/json

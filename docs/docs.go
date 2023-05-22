@@ -72,6 +72,45 @@ const docTemplate = `{
             }
         },
         "/todos/{id}": {
+            "get": {
+                "description": "GetTodo",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "todos"
+                ],
+                "operationId": "get-to-do",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "request id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "request body json",
+                        "name": "models.Todo",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Todo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.Response"
+                        }
+                    }
+                }
+            },
             "put": {
                 "description": "Update Todo Data",
                 "consumes": [
@@ -84,6 +123,45 @@ const docTemplate = `{
                     "todos"
                 ],
                 "operationId": "update-a-todo",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "request id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "request body json",
+                        "name": "models.Todo",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Todo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete To do",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "todos"
+                ],
+                "operationId": "delete-to-do",
                 "parameters": [
                     {
                         "type": "integer",
