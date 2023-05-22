@@ -182,7 +182,7 @@ func UpdateTodo(c *gin.Context) {
 // @Param id path uint true "request id"
 // @Param models.Todo body models.Todo true "request body json"
 // @Success 200 {object} dto.Response
-// @Router /todos/{id} [del]
+// @Router /todos/{id} [delete]
 func DeleteTodo(c *gin.Context) {
 
 	var newTodo models.Todo
